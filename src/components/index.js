@@ -5,4 +5,7 @@ export { default as Navbar } from "./Navbar";
 export { default as Hero } from "./Hero";
 export { default as ErrorElement } from "./ErrorElement";
 export { default as FeatureProduct } from "./FeatureProduct";
-export { default as SectionTitle } from "./SectionTitle";
+export { default as PaginationContainer } from "./PaginationContainer";
+export { default as Filters } from "./Filters";
+export { default as ProductsContainer } from "./ProductsContainer";
+export { default as ProductsList } from "./ProductsList";
