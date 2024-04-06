@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { formatPrice } from "../utils";
 
-const FormRange = ({ label, size, name }) => {
+const FormRange = ({ label, size, name, price }) => {
   const step = 1000;
   const maxPrice = 100000;
-  const [selectedPrice, setSelectedPrice] = useState(maxPrice);
+  const [selectedPrice, setSelectedPrice] = useState(price || maxPrice);
   return (
     <div className="form-control">
       <label htmlFor={name} className="label cursor-pointer">
