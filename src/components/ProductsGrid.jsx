@@ -1,9 +1,9 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useLocation } from "react-router-dom";
 import { formatPrice } from "../utils";
 
 const ProductsGrid = () => {
   const { products } = useLoaderData();
-
+  const { pathname } = useLocation();
   return (
     <div className="pt-12 grid md:grid-cols-2 lg:grid-cols-3">
       {products.map((item) => {
@@ -12,7 +12,11 @@ const ProductsGrid = () => {
         return (
           <Link
             key={item.id}
-            to={`products/${item.id}`}
+            to={
+              pathname.includes("products")
+                ? `${item.id}`
+                : `products/${item.id}`
+            }
             className="card-w-full shadow-xl hover:shadow-2xl transition duration-300"
           >
             <figure className="px-4 pt-4">
