@@ -1,6 +1,28 @@
 import React from "react";
 import { FormInput, SubmitBtn } from "../components";
 import { Form, Link } from "react-router-dom";
+import { customFetch } from "../utils";
+import { toast } from "react-toastify";
+import { loginUser } from "../features/user/userSlice";
+
+export const action =
+  (store) =>
+  async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+
+    try {
+      const res = await customFetch.post("auth/local", data);
+      toast.success("login  successfully");
+      console.log(res);
+      store.dispatch(loginUser(res.data));
+      return redirect("/");
+    } catch (error) {
+      console.log(error);
+    }
+
+    return null;
+  };
 
 function Login() {
   return (
@@ -14,13 +36,13 @@ function Login() {
           type="email"
           label="email"
           name="identifier"
-          defaultValue="test@test.com"
+          defaultValue="yange_1@qq.ca"
         ></FormInput>
         <FormInput
           type="password"
           label="password"
           name="password"
-          defaultValue="test@test.com"
+          defaultValue="123456"
         ></FormInput>
         <div className="mt-4">
           <SubmitBtn text="login" />
