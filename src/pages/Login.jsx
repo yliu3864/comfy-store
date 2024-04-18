@@ -1,9 +1,10 @@
 import React from "react";
 import { FormInput, SubmitBtn } from "../components";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { customFetch } from "../utils";
 import { toast } from "react-toastify";
 import { loginUser } from "../features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 export const action =
   (store) =>
@@ -24,7 +25,22 @@ export const action =
     return null;
   };
 
-function Login() {
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const loginAsGuest = async () => {
+    try {
+      const res = await customFetch.post("auth/local", {
+        identifier: "test@test.com",
+        password: "secret",
+      });
+      dispatch(loginUser(res.data));
+      toast.success("guest user created");
+      navigate("/");
+    } catch (error) {}
+  };
+
   return (
     <section className="h-screen grid place-items-center">
       <Form
@@ -47,7 +63,11 @@ function Login() {
         <div className="mt-4">
           <SubmitBtn text="login" />
         </div>
-        <button type="button" className="btn btn-secondary btn-block">
+        <button
+          type="button"
+          className="btn btn-secondary btn-block"
+          onClick={loginAsGuest}
+        >
           guest user
         </button>
         <p className="text-center">
@@ -62,6 +82,6 @@ function Login() {
       </Form>
     </section>
   );
-}
+};
 
 export default Login;
