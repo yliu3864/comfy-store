@@ -12,7 +12,8 @@ export const action =
     const { name, address } = Object.fromEntries(formData);
 
     const user = store.getState().userState.user;
-    const { cartItems, orderTotal, numItemsCart } = store.getState().cartState;
+    const { cartItems, orderTotal, numItemsInCart } =
+      store.getState().cartState;
 
     const req = {
       name,
@@ -20,7 +21,7 @@ export const action =
       chargeTotal: orderTotal,
       orderTotal: formatPrice(orderTotal),
       cartItems,
-      numItemsCart,
+      numItemsInCart,
     };
     try {
       const response = await customFetch.post(
@@ -36,9 +37,11 @@ export const action =
       );
       store.dispatch(clearCart());
       toast.success("order placed");
-      return redirect("./orders");
+      return redirect("/");
     } catch (error) {
-      console.log(error);
+      const errorMsg = error?.response?.data?.error?.message || "error";
+      toast.error(errorMsg);
+      if (error.response.status === 401 || 403) return redirect("/login");
       return null;
     }
   };

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 const defaultSlice = {
   cartItems: [],
-  numItemsCart: 0,
+  numItemsInCart: 0,
   cartTotal: 0,
   shipping: 500,
   tax: 0,
@@ -26,7 +26,7 @@ const cartSlice = createSlice({
       } else {
         state.cartItems.push(product);
       }
-      state.numItemsCart = Number(product.amount) + state.numItemsCart;
+      state.numItemsInCart = Number(product.amount) + state.numItemsInCart;
       state.cartTotal += product.price * product.amount;
 
       cartSlice.caseReducers.calculateTotal(state);
@@ -42,7 +42,7 @@ const cartSlice = createSlice({
       const product = state.cartItems.find((i) => i.cartID == cartID);
       state.cartItems = state.cartItems.filter((i) => i.cartID !== cartID);
 
-      state.numItemsCart = state.numItemsCart - Number(product.amount);
+      state.numItemsInCart = state.numItemsInCart - Number(product.amount);
       state.cartTotal -= product.price * product.amount;
 
       cartSlice.caseReducers.calculateTotal(state);
@@ -51,7 +51,7 @@ const cartSlice = createSlice({
     editItem: (state, action) => {
       const { cartID, amount } = action.payload;
       const item = state.cartItems.find((i) => i.cartID === cartID);
-      state.numItemsCart += amount - item.amount;
+      state.numItemsInCart += amount - item.amount;
       state.cartTotal += item.price * (amount - item.amount);
       item.amount = amount;
 

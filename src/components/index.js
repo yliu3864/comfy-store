@@ -12,3 +12,5 @@ export { default as ProductsList } from "./ProductsList";
 export { default as Loading } from "./Loading";
 export { default as CartItemList } from "./CartItemList";
 export { default as CheckoutForm } from "./CheckoutForm";
+export { default as OrderList } from "./OrderList";
+export { default as ComplexPaginationContainer } from "./ComplexPaginationContainer";
